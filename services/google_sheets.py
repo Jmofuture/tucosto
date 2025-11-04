@@ -1,3 +1,4 @@
+import json
 import os
 
 import gspread
@@ -7,6 +8,10 @@ from dotenv import load_dotenv
 from google.oauth2.service_account import Credentials
 
 load_dotenv()
+
+service_account_info = json.loads(st.secrets["google"]["service_account_json"])
+sheet_id = st.secrets["google"]["sheet_id"]
+default_sheet_name = st.secrets["google"].get("default_sheet_name", "Hoja 1")
 
 SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE", "service_account.json")
 SHEET_ID = os.getenv("SHEET_ID")
