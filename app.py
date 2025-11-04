@@ -23,7 +23,7 @@ st.title(f"🧮 Bienvenido a TuCosto App, {NAME}")
 st.write("Gestioná tus Material, cantidades y costos de forma simple y visual.")
 
 st.sidebar.header("⚙️ Panel de control")
-st.sidebar.text("Seleccioná un material y agregalo como Material 👇")
+st.sidebar.text("Selecciona un material y agregalo 👇")
 
 # === ESTADO DE SESIÓN ===
 if "Material" not in st.session_state:
