@@ -2,8 +2,6 @@
 Modulo TuCosto
 """
 
-import os
-
 import gspread
 import polars as pl
 import streamlit as st
@@ -15,9 +13,8 @@ from services.google_sheets import read_sheet
 # === CONFIGURACIÓN BASE ===
 load_dotenv()
 
-SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE", "service_account.json")
-SHEET_ID = os.getenv("SHEET_ID")
-DEFAULT_SHEET_NAME = os.getenv("DEFAULT_SHEET_NAME", "Hoja 1")
+SHEET_ID = st.secrets["google"]["sheet_id"]
+DEFAULT_SHEET_NAME = st.secrets["google"]["default_sheet_name"]
 NAME = "Deliotti"
 
 st.set_page_config(page_title="TuCosto App", layout="centered")
