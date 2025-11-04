@@ -23,7 +23,7 @@ st.title(f"🧮 Bienvenido a TuCosto App, {NAME}")
 st.write("Gestioná tus Material, cantidades y costos de forma simple y visual.")
 
 st.sidebar.header("⚙️ Panel de control")
-st.sidebar.text("Seleccioná un material y agregalo como punto 👇")
+st.sidebar.text("Seleccioná un material y agregalo como Material 👇")
 
 # === ESTADO DE SESIÓN ===
 if "Material" not in st.session_state:
@@ -55,8 +55,8 @@ try:
 
         st.sidebar.info(f"💲 Costo total: {costo_total:.2f}")
 
-        if st.sidebar.button("➕ Agregar punto"):
-            nuevo_punto = pl.DataFrame(
+        if st.sidebar.button("➕ Agregar Material"):
+            nuevo_Material = pl.DataFrame(
                 {
                     "Material": [material_seleccionado],
                     "Cantidad": [cantidad],
@@ -67,13 +67,13 @@ try:
 
             # Concatenar asegurando que ambos sean DataFrames válidos
             if st.session_state["Material"].height == 0:
-                st.session_state["Material"] = nuevo_punto
+                st.session_state["Material"] = nuevo_Material
             else:
                 st.session_state["Material"] = pl.concat(
-                    [st.session_state["Material"], nuevo_punto], how="vertical"
+                    [st.session_state["Material"], nuevo_Material], how="vertical"
                 )
 
-            st.sidebar.success(f"✅ Punto agregado: {material_seleccionado}")
+            st.sidebar.success(f"✅ Material agregado: {material_seleccionado}")
 
     else:
         st.warning("No se encontraron las columnas 'Materiales' o 'Costo' en la hoja.")
@@ -96,4 +96,4 @@ if Material_df.height > 0:
         st.session_state["Material"] = Material_df.head(0)
         st.success("Lista de Material vaciada correctamente.")
 else:
-    st.info("Todavía no agregaste ningún punto.")
+    st.info("Todavía no agregaste ningún Material.")
