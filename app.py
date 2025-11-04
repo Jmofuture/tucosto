@@ -20,14 +20,14 @@ NAME = "Deliotti"
 st.set_page_config(page_title="TuCosto App", layout="centered")
 
 st.title(f"🧮 Bienvenido a TuCosto App, {NAME}")
-st.write("Gestioná tus puntos, cantidades y costos de forma simple y visual.")
+st.write("Gestioná tus Material, cantidades y costos de forma simple y visual.")
 
 st.sidebar.header("⚙️ Panel de control")
 st.sidebar.text("Seleccioná un material y agregalo como punto 👇")
 
 # === ESTADO DE SESIÓN ===
-if "puntos" not in st.session_state:
-    st.session_state["puntos"] = pl.DataFrame(
+if "Material" not in st.session_state:
+    st.session_state["Material"] = pl.DataFrame(
         {
             "Material": pl.Series([], dtype=pl.Utf8),
             "Cantidad": pl.Series([], dtype=pl.Int64),
@@ -66,11 +66,11 @@ try:
             )
 
             # Concatenar asegurando que ambos sean DataFrames válidos
-            if st.session_state["puntos"].height == 0:
-                st.session_state["puntos"] = nuevo_punto
+            if st.session_state["Material"].height == 0:
+                st.session_state["Material"] = nuevo_punto
             else:
-                st.session_state["puntos"] = pl.concat(
-                    [st.session_state["puntos"], nuevo_punto], how="vertical"
+                st.session_state["Material"] = pl.concat(
+                    [st.session_state["Material"], nuevo_punto], how="vertical"
                 )
 
             st.sidebar.success(f"✅ Punto agregado: {material_seleccionado}")
@@ -82,18 +82,18 @@ except (gspread.exceptions.APIError, DefaultCredentialsError) as e:
     st.error(f"⚠️ No se pudieron cargar los datos de Google Sheets:\n{e}")
 
 # === CONTENIDO PRINCIPAL ===
-st.markdown("## 📋 Puntos agregados")
+st.markdown("## 📋 Material agregados")
 
-puntos_df = st.session_state["puntos"]
+Material_df = st.session_state["Material"]
 
-if puntos_df.height > 0:
-    st.dataframe(puntos_df, use_container_width=True)
+if Material_df.height > 0:
+    st.dataframe(Material_df, use_container_width=True)
 
-    total_general = puntos_df["Costo total"].sum()
+    total_general = Material_df["Costo total"].sum()
     st.markdown(f"### 💰 Total general: **${total_general:.2f}**")
 
-    if st.button("🗑️ Vaciar puntos"):
-        st.session_state["puntos"] = puntos_df.head(0)
-        st.success("Lista de puntos vaciada correctamente.")
+    if st.button("🗑️ Vaciar Material"):
+        st.session_state["Material"] = Material_df.head(0)
+        st.success("Lista de Material vaciada correctamente.")
 else:
     st.info("Todavía no agregaste ningún punto.")
